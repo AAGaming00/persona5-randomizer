@@ -17,6 +17,7 @@ tty commands: yes
 # Other settings
 Global Script: no
 Persona Using Enemies: yes
+Use Take Over as Ambush Theme: no
 Expanded BGM Patches: yes
 Ambush themes override DLC Music: yes
 Randomized DLC BGM: no
