@@ -127,9 +127,8 @@ void GetEncounterEntryFromTBLHook( int encounterID, encounterIDTBL* tbl, encount
     // if (encounterID != 641) tbl->flags.byte = randTbl->flags.byte; // 641 is the intro fight and will crash without its flags
     // tbl->flags.eventScript = 0x000; // both of theese prevent softlocks
     // tbl->flags.formation = 0x000;
-    tbl->FieldID = randTbl->FieldID;
-    tbl->RoomID = randTbl->RoomID;
-    tbl->RoomID = randTbl->RoomID;
+    tbl->FieldID = tbl->FieldID == 0 ? randTbl->FieldID : tbl->FieldID;
+    tbl->RoomID = tbl->RoomID == 0 ? randTbl->RoomID : tbl->RoomID;
     tbl->BGMID = randTbl->BGMID;
     tbl->Field04 = randTbl->Field04;
     tbl->Field06 = randTbl->Field06;
