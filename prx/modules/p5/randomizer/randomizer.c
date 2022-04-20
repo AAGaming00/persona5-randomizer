@@ -58,7 +58,6 @@ int disallowedEncounters[] = {
 
 int doNotRandomize[] = {
   // 97 /* just a Bicorn but for some reason randomizing this has a 50% chance of 0x17c crash for absolutely no reason whatsoever */
-  641 // first intro fight, really likes to crash
 };
 
 bool isDisallowedEnemy ( int id ) {
@@ -125,7 +124,7 @@ void GetEncounterEntryFromTBLHook( int encounterID, encounterIDTBL* tbl, encount
     printf("before BGMID %d\n", tbl->BGMID);
     printf("before Field04 %d\n", tbl->Field04);
     printf("before Field06 %d\n", tbl->Field06);
-    tbl->flags.byte = randTbl->flags.byte;
+    if (encounterID != 641) tbl->flags.byte = randTbl->flags.byte; // 641 is the intro fight and will crash without its flags
     tbl->flags.eventScript = 0x000; // both of theese prevent softlocks
     tbl->flags.formation = 0x000;
     tbl->FieldID = randTbl->FieldID;
