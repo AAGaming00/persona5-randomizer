@@ -124,9 +124,9 @@ void GetEncounterEntryFromTBLHook( int encounterID, encounterIDTBL* tbl, encount
     printf("before BGMID %d\n", tbl->BGMID);
     printf("before Field04 %d\n", tbl->Field04);
     printf("before Field06 %d\n", tbl->Field06);
-    // if (encounterID != 641) tbl->flags.byte = randTbl->flags.byte; // 641 is the intro fight and will crash without its flags
-    // tbl->flags.eventScript = 0x000; // both of theese prevent softlocks
-    // tbl->flags.formation = 0x000;
+    tbl->flags.byte = tbl->flags.byte == 0 ? randTbl->flags.byte : tbl->flags.byte; // 641 is the intro fight and will crash without its flags
+    if (CONFIG_ENABLED(randomizeEnemies)) tbl->flags.eventScript = 0x000; // both of theese prevent softlocks
+    if (CONFIG_ENABLED(randomizeEnemies)) tbl->flags.formation = 0x000;
     tbl->FieldID = tbl->FieldID == 0 ? randTbl->FieldID : tbl->FieldID;
     tbl->RoomID = tbl->RoomID == 0 ? randTbl->RoomID : tbl->RoomID;
     tbl->BGMID = randTbl->BGMID;
