@@ -58,6 +58,7 @@ int disallowedEncounters[] = {
 
 int doNotRandomize[] = {
   // 97 /* just a Bicorn but for some reason randomizing this has a 50% chance of 0x17c crash for absolutely no reason whatsoever */
+  641 // first intro fight, really likes to crash
 };
 
 bool isDisallowedEnemy ( int id ) {
