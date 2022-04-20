@@ -4,6 +4,7 @@
 #include "modules/p5/p5e/p5e.h"
 #include "modules/p5/EXFLW/EXFLW.h"
 #include "modules/p5/scarltz/scarltz.h"
+#include "modules/p5/randomizer/randomizer.h"
 #include "modules/p5/SecreC/SecreC.h"
 
 static ModuleInfo sModules[] =
@@ -19,6 +20,7 @@ static ModuleInfo sModules[] =
     {   "p5e",      "P5 Enhanced Module",    "enableP5EModule",    p5eInit,         p5eShutdown,            { "EXFLW" } },  
     {   "kasumi",   "Kasumi Module",         "enableKasumiModule", KasumiInit,      KasumiShutdown,            { "EXFLW" } },  
     {   "scarltz",  "Scarltz Module",    "enableScarltzModule", scarltzInit,          scarltzShutdown,            { "EXFLW" } },
+    {   "randomizer",  "Randomizer Module",    "enableRandomizerModule", NULL,          NULL,            { "EXFLW", "dc", "kasumi", "p5e" } },
 	{	"SecreC",	"SecreC Module",	"enableSecreCModule",	SecreCInit,	SecreCShutdown,	NULL    },
 #endif
 };

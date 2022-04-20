@@ -17,6 +17,7 @@
 #include "lib/config.h"
 
 #include "modules/p5/p5.h"
+#include "modules/p5/randomizer/randomizer.h"
 #include "kasumi.h"
 
 #define DEBUG_LOG( msg, ... ) \
@@ -1599,6 +1600,9 @@ static void BattleEndSkillChecks( u64 a1, u64 a2, u64 a3 )
   UzukiDebuffSpeedWarn = false;
   randomizedCombatOutfit = true;
   currentActingUnit = 0;
+  if (CONFIG_ENABLED(enableRandomizerModule)) {
+    AfterBattleHook();
+  }
 
   SetBitflagState( 0x209C, 0 ); // flag checked for ending twins encounter early
 

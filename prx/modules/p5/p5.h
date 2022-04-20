@@ -133,9 +133,49 @@ short VioletModelIDs[39];
 int sVanillaBits[6];
 int sRoyalBits[6];
 
+typedef union
+{
+  struct
+  {
+    u8 bit0 : 1;
+    u8 bit1 : 1;
+    u8 bit2 : 1;
+    u8 bit3 : 1;
+    u8 bit4 : 1;
+    u8 bit5 : 1;
+    u8 bit6 : 1;
+    u8 bit7 : 1;
+    u8 bit8 : 1;
+    u8 bit9 : 1;
+    u8 bit10 : 1;
+    u8 bit11 : 1;
+    u8 NonNegotiable : 1;
+    u8 bit13 : 1;
+    u8 bit14 : 1;
+    u8 bit15 : 1;
+    u8 bit16 : 1;
+    u8 PositionHack : 1;
+    u8 bit18 : 1;
+    u8 shadownotdisappearinbattle : 1;
+    u8 BulletHailonstart : 1;
+    u8 bit21 : 1;
+    u8 bit22 : 1;
+    u8 eventScript : 1;
+    u8 bit24 : 1;
+    u8 bit25 : 1;
+    u8 formation : 1;
+    u8 bit27 : 1;
+    u8 NoCritical : 1;
+    u8 bit29 : 1;
+    u8 bit30 : 1;
+    u8 TreasureSkimmer : 1;
+  };
+  u32 byte;
+} encounterFlags;
+
 typedef struct
 {
-  u32 flags;
+  encounterFlags flags;
   u16 Field04;
   u16 Field06;
   u16 BattleUnitID[5];

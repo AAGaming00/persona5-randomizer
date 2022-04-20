@@ -45,5 +45,8 @@ typedef struct
 void EXFLWInit( void );
 void EXFLWShutdown( void );
 
+void PartyIn( int unitID );
+void PartyOut( int unitID );
+
 #endif
 #endif

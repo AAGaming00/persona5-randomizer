@@ -19,6 +19,7 @@
 #include "modules/p5/p5.h"
 #include "modules/p5/printf_FLW.h"
 #include "EXFLW.h"
+#include "modules/p5/randomizer/randomizer.h"
 
 #define DEBUG_LOG( msg, ... ) \
   if ( CONFIG_ENABLED( debug ) ) printf( "DEBUG: " msg, ##__VA_ARGS__ )
@@ -599,7 +600,7 @@ static TtyCmdStatus ttyHealHPCmd( TtyCmd* cmd, const char** args, u32 argc, char
   return TTY_CMD_STATUS_OK;
 }
 
-static void PartyIn( int unitID )
+void PartyIn( int unitID )
 {
   int v0; // r30
   int i; // r30
@@ -624,27 +625,8 @@ static void PartyIn( int unitID )
   return;
 }
 
-static TtyCmdStatus ttyPartyInCmd( TtyCmd* cmd, const char** args, u32 argc, char** error )
+void PartyOut( int unitID )
 {
-  u32 unitID = intParse( args[0] );
-  if ( unitID > 10 )
-  {
-    *error = "Party Member ID should not exceed 10";
-    return TTY_CMD_STATUS_INVALID_ARG;
-  }
-  PartyIn( unitID );
-  return TTY_CMD_STATUS_OK;
-}
-
-static TtyCmdStatus ttyPartyOutCmd( TtyCmd* cmd, const char** args, u32 argc, char** error )
-{
-  u32 unitID = intParse( args[0] );
-  if ( unitID > 10 )
-  {
-    *error = "Party Member ID should not exceed 10";
-    return TTY_CMD_STATUS_INVALID_ARG;
-  }
-
   u16 party2 = GetUnitIDFromPartySlot(1);
   u16 party3 = GetUnitIDFromPartySlot(2);
   u16 party4 = GetUnitIDFromPartySlot(3);
@@ -666,6 +648,30 @@ static TtyCmdStatus ttyPartyOutCmd( TtyCmd* cmd, const char** args, u32 argc, ch
   {
     PartyIn(party4);
   }
+}
+
+static TtyCmdStatus ttyPartyInCmd( TtyCmd* cmd, const char** args, u32 argc, char** error )
+{
+  u32 unitID = intParse( args[0] );
+  if ( unitID > 10 )
+  {
+    *error = "Party Member ID should not exceed 10";
+    return TTY_CMD_STATUS_INVALID_ARG;
+  }
+  PartyIn( unitID );
+  return TTY_CMD_STATUS_OK;
+}
+
+static TtyCmdStatus ttyPartyOutCmd( TtyCmd* cmd, const char** args, u32 argc, char** error )
+{
+  u32 unitID = intParse( args[0] );
+  if ( unitID > 10 )
+  {
+    *error = "Party Member ID should not exceed 10";
+    return TTY_CMD_STATUS_INVALID_ARG;
+  }
+  PartyOut( unitID );
+
   return TTY_CMD_STATUS_OK;
 }
 
@@ -1075,6 +1081,10 @@ static u64 mainUpdateHook( f32 deltaTime )
   {
     // Process TTY commands
     ttyCmdProcess( ttyCommands );
+  }
+
+  if ( CONFIG_ENABLED(enableRandomizerModule) ) {
+    randomizerUpdate( deltaTime );
   }
 
   u64 result = SHK_CALL_HOOK( mainUpdate, deltaTime );
