@@ -8,6 +8,7 @@ CONFIG_START()
     CONFIG_SETTING( BOOL, enableP5EModule, "Enable P5 Enhanced module", true )
     CONFIG_SETTING( BOOL, enableKasumiModule, "Enable Kasumi Fixes module", true )
     CONFIG_SETTING( BOOL, enableScarltzModule, "Enable Scarltz module", true )
+    CONFIG_SETTING( BOOL, enableRandomizerModule, "Enable Randomizer module", false )
     CONFIG_SETTING( BOOL, enableSecreCModule, "Enable SecreC module", true )
     CONFIG_SETTING( BOOL, enableGlobalBF, "Global Script", true )
     CONFIG_SETTING( BOOL, enableSumire, "Sumire models", false )
@@ -25,6 +26,7 @@ CONFIG_START()
     CONFIG_SETTING( BOOL, enableKasumi, "Kasumi patches", false )
     CONFIG_SETTING( BOOL, enableMidWinterOutfits, "Midwinter Outfits", false )
     CONFIG_SETTING( BOOL, enableTTYCommands, "tty commands", true )
+    CONFIG_SETTING( BOOL, royalAmbushBGM, "Use Take Over as Ambush Theme", false )
     CONFIG_SETTING( BOOL, ambushOverDLC, "Ambush themes override DLC Music", false )
     CONFIG_SETTING( BOOL, P5RTitleBGM, "Alternate title screens", true )
     CONFIG_SETTING( BOOL, AutoUnlockBatonPass, "Automatically Unlock Baton Pass", true )
@@ -37,6 +39,16 @@ CONFIG_START()
     CONFIG_SETTING( BOOL, enableFileAccessLogging, "file access logging", true )
     CONFIG_SETTING_ARRAY( STRING, extraModCPKName, "names of extra mod cpk", 10,
     "mod", "mod", "mod", "mod", "mod", "mod", "mod", "mod", "mod", "mod")
+
+    CONFIG_SETTING( BOOL, randomizeEncounters, "Randomize Encounters", true )
+    CONFIG_SETTING( BOOL, randomizeEnemies, "Randomize Enemies", false )
+    CONFIG_SETTING( BOOL, randomizePartyMembers, "Randomize Party", true )
+    CONFIG_SETTING( BOOL, randomizeHP, "Randomize HP", true )
+    CONFIG_SETTING( BOOL, randomizeSP, "Randomize SP", true )
+    CONFIG_SETTING( BOOL, randomizePersonaStats, "Randomize Persona Stats", true )
+    CONFIG_SETTING( BOOL, randomizePersonaSkills, "Randomize Persona Skills", true )
+    CONFIG_SETTING( BOOL, giveJokerDebugInstakill, "Give Joker Instakill skill", false )
+        
 #endif
 #ifdef GAME_TEST
     // Example config setting values

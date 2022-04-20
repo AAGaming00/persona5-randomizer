@@ -16,6 +16,7 @@
 #include "lib/config.h"
 
 #include "modules/p5/p5.h"
+#include "modules/p5/randomizer/randomizer.h"
 #include "dc.h"
 
 #define DEBUG_LOG( msg, ... ) \
@@ -1155,7 +1156,7 @@ static bool EnemyHasCombatCutinHook( int a1, EnemyPersonaFunctionStruct1* a2 )
   else return result;
 }
 
-static int SetUpEncounterFlagsHook( EncounterFuncStruct* a1, EncounterStructShort* a2)
+int SetUpEncounterFlagsHook( EncounterFuncStruct* a1, EncounterStructShort* a2)
 {
   //FUNC_LOG("Loading SetUpEncounterFlagsHook\n");
   PrepareDLCBGM(); // Load DLC BGM
@@ -1180,19 +1181,26 @@ static int SetUpEncounterFlagsHook( EncounterFuncStruct* a1, EncounterStructShor
       {
         isAmbush = false;
 
-        int AmbushRNG = GetRandom( 2 );
-        //printf("Ambush RNG -> %d\n", AmbushRNG);
-        if ( AmbushRNG == 0 )
+        if (!CONFIG_ENABLED( royalAmbushBGM ))
         {
-          a1->BGMID = 907; // Take Over
-        }
-        else if ( AmbushRNG == 1 )
-        {
-          a1->BGMID = 971; // What you wish for
+          int AmbushRNG = GetRandom( 2 );
+          //printf("Ambush RNG -> %d\n", AmbushRNG);
+          if ( AmbushRNG == 0 )
+          {
+            a1->BGMID = 907; // Take Over
+          }
+          else if ( AmbushRNG == 1 )
+          {
+            a1->BGMID = 971; // What you wish for
+          }
+          else
+          {
+            a1->BGMID = 972; // Axe to grind
+          }
         }
         else
         {
-          a1->BGMID = 972; // Axe to grind
+          a1->BGMID = 907; // Take Over
         }
       }
       else if ( isAmbushed && CONFIG_ENABLED( ambushOverDLC ) )
@@ -1207,6 +1215,9 @@ static int SetUpEncounterFlagsHook( EncounterFuncStruct* a1, EncounterStructShor
   if ( shdEnemyFile == 0x0 )
   {
     shdEnemyFile = open_file( "init/shdEnemy.pdd", 0 );
+  }
+  if ( CONFIG_ENABLED( enableRandomizerModule ) ) {
+    SetUpEncounterFlagsRandomizerHook(a1, a2);
   }
   return result;
 }
@@ -1223,6 +1234,10 @@ static encounterIDTBL* FUN_00263b94Hook( int a1 )
     hexDump("TBL Data", result, 24);
     LastUsedEncounterID = a1;
   }
+  if ( CONFIG_ENABLED( enableRandomizerModule ) ) {
+    GetEncounterEntryFromTBLHook(a1, result, _shk_prx_trampoline_FUN_00263b94_ptr);
+  }
+
   return result;
 }
 
@@ -1721,9 +1736,9 @@ static bool CheckRyujiInstakill( void )
 static bool FUN_007ed620Hook( structA_2* a1 )
 {
   FUNC_LOG("Loading FUN_007ed620Hook\n");
-  //printf("Unit Type %d with unit ID %d CHECK_SLIP\n", a1->Field0C->Field18->btlUnitPointer->unitType, a1->Field0C->Field18->btlUnitPointer->unitID);
+  printf("Unit Type %d with unit ID %d CHECK_SLIP\n", a1->Field0C->Field18->btlUnitPointer->unitType, a1->Field0C->Field18->btlUnitPointer->unitID);
   enemyBtlUnit = a1->Field0C->Field18->btlUnitPointer;
-  //printf("Current Active Battle Unit being checked; printing pointer chain\na1 ->0x%x\nField0C -> 0x%x\nField18 -> 0x%x\nbtlUnit Pointer -> 0x%x\n", a1, a1->Field0C, a1->Field0C->Field18, a1->Field0C->Field18->btlUnitPointer);
+  printf("Current Active Battle Unit being checked; printing pointer chain\na1 ->0x%x\nField0C -> 0x%x\nField18 -> 0x%x\nbtlUnit Pointer -> 0x%x\n", a1, a1->Field0C, a1->Field0C->Field18, a1->Field0C->Field18->btlUnitPointer);
   return SHK_CALL_HOOK( FUN_007ed620, a1 );
 }
 

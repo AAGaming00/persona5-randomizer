@@ -69,6 +69,9 @@ static void setBgmHook( int id )
         RandomizeTitleScreenBGM();
       }
     }
+    if (CONFIG_ENABLED(enableRandomizerModule)) {
+      setRandomizerReady(true);
+    }
   }
   else if ( id == 340 ) //Victory Screen
   {
