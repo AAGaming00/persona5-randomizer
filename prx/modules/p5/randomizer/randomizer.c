@@ -163,7 +163,7 @@ void GetEncounterEntryFromTBLHook( int encounterID, encounterIDTBL* tbl, encount
     if (encounterID == 645) {
       tbl->BattleUnitID[3] = 0;
       tbl->BattleUnitID[4] = 0;
-    }; // gaining personas tutorial, requires joker's gun to be used so softlocks with >3 enemies
+    } // gaining personas tutorial, requires joker's gun to be used so softlocks with >3 enemies
     cacheState[encounterID] = true; // no need to store it, the pointers are cached and reused internally apparently.
     printf("encounter id %d randomized\n", encounterID);
     hexDump("Randomized TBL Data", tbl, 24);
