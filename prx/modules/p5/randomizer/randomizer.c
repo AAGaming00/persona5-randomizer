@@ -173,6 +173,11 @@ void SetUpEncounterFlagsRandomizerHook( EncounterFuncStruct* a1, EncounterStruct
     printf("field00 0x%x\nfield02 0x%x\nfield04 0x%x\n", a2->field00, a2->field02, a2->field04);
     saveParty();
     if (a2->encounterIDLocal == 644) return; // this breaks when randomized
+    if (a2->encounterIDLocal == 745) { // forces this skill to be used
+      btlUnit_Unit* Joker = GetBtlPlayerUnitFromID( 1 );
+      Joker->StockPersona[0].SkillID[1] = 64;
+      return;
+    }
     randomizeParty();
     btlUnit_Unit* Joker = GetBtlPlayerUnitFromID( 1 );
     for (int i = 0; i < 12; i++) // loop through stock
