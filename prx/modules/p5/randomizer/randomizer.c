@@ -421,7 +421,7 @@ void setRandomizerState ( bool state )
   //   loadParty();
   // }
   randomizerActive = state;
-  printf("randomizer set to %d", state);
+  printf("randomizer set to %d\n", state);
 
   // loadBF("script/randomizer/init.bf"); // shows futaba cutin, this is a giant hack and needs to be replaced with C
 }
@@ -456,6 +456,12 @@ void randomizerUpdate ( f32 deltaTime )
     if (pad != 0) {
       if ((pad & 0x4000000) && (pad & 0x800000)) { // Left + L1
         setRandomizerState(!isRandomizerEnabled());
+      }
+      if ((pad & 0x4000000) && (pad & 0x200000)) { // L1 + Right
+        printf("rerolling all enemies\n");
+        for (int i = 0; i < sizeof(cacheState) / sizeof(*cacheState); i++) {
+          cacheState[i] = false;
+        }
       }
     }
   }
