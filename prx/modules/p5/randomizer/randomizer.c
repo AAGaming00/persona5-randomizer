@@ -57,6 +57,7 @@ int disallowedEncounters[] = {
 };
 
 int doNotRandomize[] = {
+  644 // kamoshida prison forced gun fight, usually impossible randomized
   // 97 /* just a Bicorn but for some reason randomizing this has a 50% chance of 0x17c crash for absolutely no reason whatsoever */
 };
 
@@ -407,9 +408,9 @@ void AfterBattleHook() {
   if (!CONFIG_ENABLED ( enableRandomizerModule )) return;
   printf("unrandomizing party");
   loadParty();
-  for (int i = 0; i < sizeof(cacheState) / sizeof(*cacheState); i++) {
-    cacheState[i] = false;
-  }
+  // for (int i = 0; i < sizeof(cacheState) / sizeof(*cacheState); i++) {
+  //   cacheState[i] = false;
+  // }
 }
 
 void setRandomizerState ( bool state )
